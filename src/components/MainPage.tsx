@@ -18,6 +18,7 @@ interface Photo {
   id: string;
   url: string;
   title: string;
+  text: string;
   song: {
     title: string;
     artist: string;
@@ -74,7 +75,8 @@ const photoSets: Photo[] = [
   {
     id: '1',
     url: '/photos/foto1.jpg',
-    title: 'Melhor Dia',
+    title: '13 de Agosto de 2022',
+    text: 'O dia oficial, já estávamos grudados faz tempo, mas mesmo bem jovem, decidi ser feliz. Nos jogamos de cabeça, sem preparo, só amor',
     song: {
       title: 'Little Freak',
       artist: 'Harry Styles',
@@ -87,6 +89,7 @@ const photoSets: Photo[] = [
     id: '2',
     url: '/photos/foto-junina.jpg',
     title: 'Crescendo Juntos',
+    text : 'Viver a vida na escola com você é algo que nunca vou poder viver denovo, cada manhã , te sentir mais perto de mim.  E a cada discussão ficávamos mais fortes... Eu amo essa escola, afinal de contas, temos que ser gratos a ela, pois foi onde pude te encontrar',
     song: {
       title: 'Look up at the stars',
       artist: 'Shawn Mendes',
@@ -99,6 +102,7 @@ const photoSets: Photo[] = [
     id: '3',
     url: '/photos/foto3.jpg',
     title: 'Amor sempre nos momentos simples',
+    text: 'Sempre soubemos que não precisávamos de muito para sermos felizes, e que o amor é construído nos pequenos momentos. Ir apé ao shopping para poder te ver ainda é uma das coisas favoritas que nossos filhos também vão querer fazer. Você lutou muito por nós nessa época, e nunca vou esquecer disso.',
     song: {
       title: 'Angels Fly',
       artist: 'Louis Tomlinson',
@@ -111,6 +115,7 @@ const photoSets: Photo[] = [
     id: '4',
     url: '/photos/foto-top.jpg',
     title: 'Gravado pra sempre na nossa História',
+    text: 'Pra mim, um dos melhores momentos que já vivemos. Não dá para não pensar em você de vestido branco, franjinha e um sorrisão no rosto dançando essa no nosso casamento. Já eramos muuito felizes aqui, sendo estranhos, mas estranhos juntos.  "Minha Namorda é minha melhor amiga.", foi o que minha cabeça cantava depois daquela noite',
     song: {
       title: 'Oldies Station',
       artist: 'Twenty One Pilots',
@@ -123,6 +128,7 @@ const photoSets: Photo[] = [
     id: '5',
     url: '/photos/foto-atual.jpg',
     title: 'Always, My lov',
+    text: 'Minha Princesa Bebeu... Pra sempre, minha. As dificuldades continuam vindo, mas de verdade ,  eu prefiro que venham muitas, porque só lembramos o quão bom é estar vivos e apaixonados juntos quando superamos o mal. Te amo ! ',
     song: {
       title: 'Zombie Lady',
       artist: 'Damiano David',
@@ -275,9 +281,7 @@ const MainPage: React.FC<MainPageProps> = ({ onBack }) => {
         {/* Love Message */}
         <div className="text-center max-w-2xl">
           <p className="text-white text-lg md:text-xl font-light leading-relaxed">
-            "3 anos juntos, e cada dia ao seu lado é uma nova razão para sorrir. 
-            Você é meu presente mais precioso, minha companheira de aventuras, 
-            e meu amor para sempre. ❤️"
+              {currentPhotoSet.text}
           </p>
         </div>
       </div>
