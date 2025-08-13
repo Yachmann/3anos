@@ -12,21 +12,18 @@ const HomePage: React.FC<HomePageProps> = ({ onEnter }) => {
     minutes: 0,
     seconds: 0
   });
-
+  const [musicStarted, setMusicStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const startDate = new Date('2022-08-13');
-
+    const startDate = new Date(2022, 7, 13); // 13 de agosto (mês é 0-indexado)
     const updateTime = () => {
       const now = new Date();
       const diff = now.getTime() - startDate.getTime();
-
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
       setTimeElapsed({ days, hours, minutes, seconds });
     };
 
@@ -35,20 +32,31 @@ const HomePage: React.FC<HomePageProps> = ({ onEnter }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Iniciar música automaticamente (depende do navegador permitir autoplay)
-  useEffect(() => {
-    const playMusic = () => {
-      audioRef.current?.play().catch(() => {
-        console.log('Autoplay bloqueado, espere interação do usuário');
+  const startMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {
+        console.log("Usuário precisa interagir primeiro");
       });
-    };
-    playMusic();
-  }, []);
+    }
+    setMusicStarted(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-400 via-white-500 to-orange-600 flex flex-col items-center justify-center relative overflow-hidden text-center">
       {/* Música */}
       <audio ref={audioRef} src="/musica.m4a" loop />
+
+      {/* Botão de play se a música não começou */}
+      {!musicStarted && (
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+          <button
+            onClick={startMusic}
+            className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-100 transform hover:scale-105 transition-all duration-300 shadow-2xl"
+          >
+            ▶️ Tocar Música
+          </button>
+        </div>
+      )}
 
       {/* Efeitos de fundo */}
       <div className="absolute inset-0">
@@ -68,14 +76,14 @@ const HomePage: React.FC<HomePageProps> = ({ onEnter }) => {
         ))}
       </div>
 
-      {/* Foto central */}
+      {/* Foto */}
       <img
         src="/foto.jpeg"
         alt="Nossa foto"
         className="w-64 h-64 object-cover rounded-full shadow-2xl border-4 border-white mb-6 z-10"
       />
 
-      {/* Coração animado */}
+      {/* Coração */}
       <div className="mb-8 relative z-10">
         <Heart className="w-24 h-24 text-red-400 mx-auto animate-bounce drop-shadow-2xl" fill="currentColor" />
         <div className="absolute inset-0 flex items-center justify-center">
@@ -97,10 +105,10 @@ const HomePage: React.FC<HomePageProps> = ({ onEnter }) => {
         ))}
       </div>
 
-      {/* Botão */}
+      {/* Botão entrar */}
       <button
         onClick={() => {
-          audioRef.current?.play(); // Garantir que a música toca após clique
+          startMusic(); // também garante música ao entrar
           onEnter();
         }}
         className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-100 transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-purple-500/25"
